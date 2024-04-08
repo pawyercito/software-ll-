@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Agendar Cita</title>
+ <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+ <style>
+    body {
+      font-family: 'Century Gothic', sans-serif;
+    }
+ </style>
+</head>
+<body class="bg-blue-100 flex flex-col items-center justify-center min-h-screen">
+ <nav class="bg-white shadow-md w-full fixed top-0">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+      <a class="font-bold text-xl text-blue-600" href="#">Logo Consultorio</a>
+      <div class="flex items-center space-x-4">
+        <a class="text-blue-600 hover:text-blue-700" href="#">Perfil</a>
+        <a class="text-blue-600 hover:text-blue-700" href="#">Citas Pendientes</a>
+        <a class="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" href="#">NOMBRE DEL PACIENTE</a>
+      </div>
+    </div>
+ </nav>
+
+ <h1 class="mt-20 font-bold">AGENDA TU CITA</h1>
+ <div class="w-3/4 max-w-6xl flex flex-col sm:flex-row bg-blue-200 p-10 rounded-lg justify-center items-center mt-4 mb-4">
+    <div class="bg-white w-full sm:w-3/4 p-10 rounded-lg shadow-md">
+        <div>
+            <h2 class="text font-bold border-b-2 border-blue-600 mb-4 flex justify-center">AGENDA TU CITA AQUÍ</h2>
+            <form action="/citas/" method="post">
+              <div class="flex sm:flex-row">
+                <div class="w-full sm:w-1/2 pr-40 mb-10">
+                    <h2 class="text mt-4 border-b-2 border-blue-600">¡Tienes una cita pendiente el 21/02/2024 con el doctor Juan!</h2>
+                </div>
+                <div class="w-full sm:w-1/2">
+                 <div class="flex items-center mb-2 justify-between">
+                    <p class="text border-b-2 border-blue-600">Escoge la especialidad que requieres</p>
+                    <select name="especialidad">
+                        {% for doctor in doctores %}
+                            <option value="{{ doctor.especialidad }}">{{ doctor.especialidad }}</option>
+                        {% endfor %}
+                    </select>
+                 </div>
+                 <div class="flex items-center mb-2 justify-between">
+                    <p class="text border-b-2 border-blue-600">Doctores Disponibles</p>
+                    <select name="doctor">
+                        {% for doctor in doctores %}
+                            <option value="{{ doctor.nombre }}">{{ doctor.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                 </div>              
+                 <div class="flex items-center mb-2 justify-between">
+                    <p class="text border-b-2 border-blue-600">Fechas disponibles</p>
+                    <input name="fecha" type="date">
+                 </div>
+                 <div class="text-center mt-4">
+                    <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">AGENDAR</button>
+                 </div>
+                </div>
+              </div>
+            </form>
+        </div>
+    </div>
+</body>
+<!-- Incluir el archivo JavaScript -->
+<script src="/static/js/javascript.js"></script>
+</html>

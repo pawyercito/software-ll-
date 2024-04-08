@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Perfil</title>
+ <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+ <style>
+    body {
+      font-family: 'Century Gothic', sans-serif;
+    }
+ </style>
+</head>
+<body class="bg-blue-100 flex flex-col items-center justify-center min-h-screen">
+ <nav class="bg-white shadow-md w-full fixed top-0">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+      <a class="font-bold text-xl text-blue-600" href="#">Logo Consultorio</a>
+      <div class="flex items-center space-x-4">
+        <a class="text-blue-600 hover:text-blue-700" href="#">Agendar Citas</a>
+        <a class="text-blue-600 hover:text-blue-700" href="#">Citas Pendientes</a>
+        <a class="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" href="#">{{ user.nombre }}</a>
+      </div>
+    </div>
+ </nav>
+
+ <h1 class="mt-20 font-bold">PERFIL</h1>
+ <div class="w-3/4 max-w-6xl flex flex-col sm:flex-row bg-blue-200 p-10 rounded-lg justify-center items-center mt-4 mb-4">
+    <div class="bg-white w-full sm:w-3/4 p-10 rounded-lg shadow-md">
+        <div>
+      <h2 class="text font-bold border-b-2 border-blue-600 mb-4 flex justify-center">¡Bienvenido {{ user.nombre }}!</h2>
+      <div class="flex sm:flex-row">
+        <div class="w-full sm:w-1/2 pr-40 mb-10">
+            <h2 class="text mt-4">Tus citas pendientes:</h2>
+            {% for cita in citas_agendadas %}
+                <p>{{ cita.fecha }}: {{ cita.doctor }} - {{ cita.especialidad }}</p>
+            {% endfor %}
+            <p class="mt-10">¿Quieres agendar una cita? Pulsa aquí:</p>
+            <button class="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 mt-4">AGENDAR</button>
+          </div>
+          <div class="w-full sm:w-1/2">
+            <h3 class="text-lg font-bold uppercase mb-2">Información General</h3>
+            <div class="flex items-center mb-2">
+                <img class="w-6 h-6 mr-2" src="/img_perfil/user-alt-1-svgrepo-com.png" alt="Nombre del paciente">
+                <p>Nombre del paciente: {{ user.nombre }}</p>
+              </div>
+              <div class="flex items-center mb-2">
+                <img class="w-6 h-6 mr-2" src="/img_perfil/alt-house-svgrepo-com.png" alt="Vive en">
+                <p>Vive en: {{ additional_info.direccion }}</p>
+              </div>
+              <div class="flex items-center mb-2">
+                <img class="w-6 h-6 mr-2" src="/img_perfil/phone-svgrepo-com.png" alt="Número de teléfono">
+                <p>Número de teléfono: {{ additional_info.telefono }}</p>
+              </div>
+              <div class="flex items-center mb-2">
+                <img class="w-6 h-6 mr-2" src="/img_perfil/boy-man-user-svgrepo-com.png" alt="Sexo">
+                <p>Sexo: {{ additional_info.sexo }}</p>
+              </div>
+              <div class="flex items-center mb-2">
+                <img class="w-6 h-6 mr-2" src="/img_perfil/birthday-cake-celebration-festival-party-svgrepo-com.png" alt="Fecha de Nacimiento">
+                <p>Fecha de Nacimiento: {{ additional_info.fecha_nacimiento }}</p>
+              </div>
+          </div>
+      </div>
+    </div>
+ </div>
+<!-- Incluir el archivo JavaScript -->
+<script src="/static/js/javascript_perfil.js"></script>
+
+</body>
+</html>
