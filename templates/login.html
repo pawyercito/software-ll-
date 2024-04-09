@@ -12,9 +12,9 @@
 <body class="bg-gray-100">
 
 <div class="flex items-center min-h-screen px-5 py-5">
-  <div class="w-3/4 max-w-6xl mx-auto flex flex-col sm:flex-row bg-blue-200 p-20 rounded-lg"> <!-- Añade un fondo azul claro y padding al cuadro exterior, y ajusta su ancho a 3/4 del total -->
-    <div class="bg-white shadow-md rounded-lg p-12 sm:p-14 w-full sm:w-1/2 mr-3 relative mb-4 sm:mb-0"> <!-- Ajusta el ancho a la mitad para pantallas más grandes y añade margen inferior para móviles -->
-      <img src="papelmatic-higiene-profesional-infecciones-salas-espera-recepcion-sanidad-hospitales-1080x675.jpg" alt="Imagen de inicio de sesión" class="absolute inset-0 w-full h-full object-cover shadow-md rounded-lg">
+ <div class="w-3/4 max-w-6xl mx-auto flex flex-col sm:flex-row bg-blue-200 p-20 rounded-lg">
+    <div class="bg-white shadow-md rounded-lg p-12 sm:p-14 w-full sm:w-1/2 mr-3 relative mb-4 sm:mb-0">
+      <img src="/static/imagenes/papelmatic-higiene-profesional-infecciones-salas-espera-recepcion-sanidad-hospitales-1080x675.jpg" alt="Imagen de inicio de sesión" class="absolute inset-0 w-full h-full object-cover shadow-md rounded-lg">
       <div class="relative">
         <h2 class="text-2xl text-center text-black-600">INICIAR SESIÓN</h2>
         <form class="mt-5" id="login-form" action="/login" method="post">
@@ -26,7 +26,7 @@
           </div>
           <div class="text-center">
               <button class="uppercase text-black bg-blue-500 hover:bg-blue-600 focus:ring-blue-400 focus:outline-none focus:ring-2 rounded-lg p-2 w-full" type="submit">
-                  INICIAR SESIÓN
+                 INICIAR SESIÓN
               </button>
           </div>
           <div class="text-center mt-4">
@@ -37,7 +37,7 @@
         </form>
       </div>
     </div>
-    <div class="bg-white shadow-md rounded-lg p-12 sm:p-14 w-full sm:w-1/2"> <!-- Ajusta el ancho a la mitad para pantallas más grandes -->
+    <div class="bg-white shadow-md rounded-lg p-12 sm:p-14 w-full sm:w-1/2">
       <h2 class="text-2xl text-center text-black-600">CREA TU CUENTA</h2>
         <form class="mt-5">
           <div class="mb-4">
@@ -48,17 +48,16 @@
               </a>
             </div>
             <div class="text-center mt-4">
-              <button class="uppercase text-black bg-gray-300 hover:bg-gray-300 focus:ring-gray-400 focus:outline-none focus:ring-2 rounded-lg p-2 w-full">
-                REGISTRATE AQUÍ
-              </button>
-            </div>
+              <a href="/users/" class="uppercase text-black bg-blue-500 hover:bg-blue-600 focus:ring-blue-400 focus:outline-none focus:ring-2 rounded-lg p-2 w-full inline-block">
+                  REGISTRATE AQUÍ
+              </a>
           </div>
         </form>
     </div>
-  </div>
+ </div>
 </div>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('#login-form');
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -87,7 +86,14 @@
             }
         });
     });
+
+    // Script para manejar la redirección del botón "REGISTRATE AQUÍ"
+    const registerButton = document.getElementById('register-button');
+    registerButton.addEventListener('click', function() {
+        window.location.href = '/users/';
+    });
 });
-  </script>
+</script>
+
 </body>
 </html>

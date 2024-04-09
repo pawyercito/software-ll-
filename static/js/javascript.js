@@ -11,23 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return fetch(url, options);
     };
-
-    // Realiza una solicitud GET a la ruta /perfil/ cuando la página se cargue
-    fetchWithAuth("/perfil/")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Respuesta del servidor:', data);
-            // Aquí puedes procesar la respuesta del servidor y actualizar la página de perfil según sea necesario
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-
     const form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
         event.preventDefault();

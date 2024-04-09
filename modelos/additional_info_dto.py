@@ -7,3 +7,4 @@ class AdditionalInfoDTO(BaseModel):
     telefono: str
     sexo: str
     fecha_nacimiento: date
+    user_id: int 

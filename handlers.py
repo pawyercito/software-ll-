@@ -13,8 +13,11 @@ from modelos.login_input import LoginInput
 from repository.cita_repository import CitaRepository
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from use_case.citas_use_case import ObtenerCitasUseCase
 
 from modelos import additional_info_dto as additional_info_schemas
+
+from modelos.citas_dto_model import CitaBase
 
 
 from fastapi.templating import Jinja2Templates
@@ -69,6 +72,9 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 from fastapi import Header
 
 def get_current_user(db: Session = Depends(get_db), token: str = Header(None, alias="Authorization")) -> Optional[User]:
+    logger.debug("Entering get_current_user function") # Agrega este log al inicio de la función
+    logger.debug(f"Received header: {token}") # Add this line
+
     if token is None:
         logger.error("Token not received")
         raise HTTPException(
@@ -78,7 +84,7 @@ def get_current_user(db: Session = Depends(get_db), token: str = Header(None, al
         )
 
     try:
-        # Remove the "Bearer " prefix from the token
+        logger.debug(f"Received token: {token}")
         token = token.replace("Bearer ", "")
         logger.debug(f"Received token: {token}")
 
@@ -215,18 +221,15 @@ def citas(request: Request, db: Session = Depends(get_db)):
     
 
 @router.get("/perfil/", response_class=HTMLResponse)
-def perfil(request: Request, user: User = Depends(get_current_user), cita_repository: CitaRepository = Depends(get_cita_repository)):
-    # Obtiene la información adicional del usuario
-    additional_info = user.additional_info
-    additional_info_dto = AdditionalInfoDTO(**additional_info.__dict__)
+def perfil(request: Request, db: Session = Depends(get_db), user: User = Depends(get_current_user), cita_repository: CitaRepository = Depends(get_cita_repository)):
+    logger.debug("Entering perfil route") # Agrega este log al inicio de la función
 
-    # Obtiene las citas agendadas por el usuario
-    citas_agendadas = cita_repository.get_citas_by_user(user.id)
+    additional_info = db.query(AdditionalInfoDTO).filter(AdditionalInfoDTO.user_id == user.id).first()
+    logger.debug(f"Retrieved additional info: {additional_info}") # Agrega este log después de obtener la información adicional
 
-    # Pasa la información del usuario y las citas agendadas al template
-    return templates.TemplateResponse("perfil.html", {
-        "request": request,
-        "user": user,
-        "additional_info": additional_info_dto,
-        "citas_agendadas": citas_agendadas,
-    })
+    obtener_citas_use_case = ObtenerCitasUseCase(cita_repository)
+    citas = obtener_citas_use_case.execute(user.id)
+    logger.debug(f"Retrieved citas: {citas}") # Agrega este log después de obtener las citas
+
+    return templates.TemplateResponse("perfil.html", {"request": request, "user": user, "additional_info": additional_info, "citas_agendadas": citas})
+   
